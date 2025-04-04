@@ -1,0 +1,20 @@
+// routes/user.js
+const express = require('express');
+const User = require('../models/User');
+const router = express.Router();
+
+// Register a new user
+router.post('/register', async (req, res) => {
+    const { name, role } = req.body;
+    const newUser = new User({ name, role });
+    await newUser.save();
+    res.status(201).send(newUser);
+});
+
+// Get all users
+router.get('/', async (req, res) => {
+    const users = await User.find();
+    res.send(users);
+});
+
+module.exports = router;
